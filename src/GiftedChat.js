@@ -8,7 +8,7 @@
 
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Animated, Platform, StyleSheet, View } from 'react-native';
+import { Animated, KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 
 import ActionSheet from '@expo/react-native-action-sheet';
 import moment from 'moment';
@@ -298,27 +298,28 @@ class GiftedChat extends React.Component {
     if (this._messageContainerRef === null) {
       return;
     }
-    this._messageContainerRef.scrollTo({ y: 0, animated });
+    this._messageContainerRef.scrollToBottom()
   }
 
 
   renderMessages() {
     const AnimatedView = this.props.isAnimated === true ? Animated.View : View;
     return (
-      <AnimatedView
-        style={{
-          height: this.state.messagesContainerHeight,
-        }}
-      >
-        <MessageContainer
-          {...this.props}
-          invertibleScrollViewProps={this.invertibleScrollViewProps}
-          messages={this.getMessages()}
-          ref={(component) => (this._messageContainerRef = component)}
-
-        />
-        {this.renderChatFooter()}
-      </AnimatedView>
+      <KeyboardAvoidingView enabled>
+        <AnimatedView
+          style={{
+            height: this.state.messagesContainerHeight,
+          }}
+        >
+          <MessageContainer
+            {...this.props}
+            invertibleScrollViewProps={this.invertibleScrollViewProps}
+            messages={this.getMessages()}
+            ref={(component) => (this._messageContainerRef = component)}
+          />
+          {this.renderChatFooter()}
+        </AnimatedView>
+      </KeyboardAvoidingView>
     );
   }
 
@@ -341,7 +342,6 @@ class GiftedChat extends React.Component {
     }
 
     this.props.onSend(messages);
-    this.scrollToBottom();
 
     if (shouldResetInputToolbar === true) {
       setTimeout(() => {
