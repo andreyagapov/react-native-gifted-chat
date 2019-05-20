@@ -261,6 +261,9 @@ class GiftedChat extends React.Component {
         messagesContainerHeight: newMessagesContainerHeight,
       });
     }
+    setTimeout(() => {
+      this.scrollToBottom()
+  }, 220)
   }
 
   onKeyboardWillHide() {
