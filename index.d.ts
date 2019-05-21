@@ -259,6 +259,7 @@ export class GiftedChat extends React.Component<GiftedChatProps> {
     messages: TMessage[],
     inverted?: boolean,
   ): TMessage[];
+  scrollToBottom: () => void;
 }
 
 interface InputToolbarProps {
